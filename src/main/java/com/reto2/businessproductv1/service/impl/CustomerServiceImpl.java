@@ -4,7 +4,8 @@ import com.reto2.businessproductv1.dto.response.CustomerProductResponse;
 import com.reto2.businessproductv1.dto.response.ExistingProductResponse;
 import com.reto2.businessproductv1.dto.response.ProductResponse;
 import com.reto2.businessproductv1.dto.response.ProductsForCustomerResponse;
-import com.reto2.businessproductv1.proxy.DataProductV1Proxy;
+import com.reto2.businessproductv1.proxy.DataProductV1CustomerProductProxy;
+import com.reto2.businessproductv1.proxy.DataProductV1ProductProxy;
 import com.reto2.businessproductv1.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +15,18 @@ import java.util.List;
 @Service
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
-    private DataProductV1Proxy dataProductV1Proxy;
+    private DataProductV1ProductProxy dataProductV1ProductProxy;
+
+    @Autowired
+    private DataProductV1CustomerProductProxy dataProductV1CustomerProductProxy;
 
     @Override
     public ProductsForCustomerResponse getProductsForCustomer(String cic) {
         // obtener todos los productos
-        List<ProductResponse> allProducts = dataProductV1Proxy.findAllProducts();
+        List<ProductResponse> allProducts = dataProductV1ProductProxy.findAllProducts();
 
         // dado el cic obtener los customer-product
-        List<CustomerProductResponse> customerProducts = dataProductV1Proxy.findCustomerProductsByCic(cic);
+        List<CustomerProductResponse> customerProducts = dataProductV1CustomerProductProxy.findCustomerProductsByCic(cic);
 
         // preparar la respuesta
         List<ExistingProductResponse> currentCustomerProducts = new ArrayList<>();

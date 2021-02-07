@@ -8,26 +8,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "data-product-v1", url = "${data-product-v1.url}")
-public interface DataProductV1Proxy {
+@FeignClient(name = "data-product-v1-product", url = "${data-product-v1.url}")
+public interface DataProductV1ProductProxy {
 
     @GetMapping("/product")
     List<ProductResponse> findAllProducts();
 
-    @GetMapping("/customer/{cic}/product")
-    List<CustomerProductResponse> findCustomerProductsByCic(
-        @PathVariable("cic") String cic
-    );
 
     @GetMapping("/product/{tio-aux}")
     ProductResponse findProductByTioAux(
-        @PathVariable("tio-aux") String tioAux
-    );
-
-    @GetMapping("/customer/{cic}/product/{tio-aux}")
-    CustomerProductResponse findCustomerProductById(
-        @PathVariable("cic") String cic,
-        @PathVariable("tio-aux") String tioAux
+            @PathVariable("tio-aux") String tioAux
     );
 
 }
