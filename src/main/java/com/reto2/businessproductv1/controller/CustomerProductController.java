@@ -1,7 +1,7 @@
 package com.reto2.businessproductv1.controller;
 
-import com.reto2.businessproductv1.dto.response.ProductResponse;
-import com.reto2.businessproductv1.proxy.DataProductV1Proxy;
+import com.reto2.businessproductv1.dto.response.CustomerProductResponse;
+import com.reto2.businessproductv1.service.CustomerProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/business-product-v1")
 public class CustomerProductController {
     @Autowired
-    private DataProductV1Proxy dataProductV1Proxy;
+    private CustomerProductService customerProductService;
 
-    @GetMapping("/product/{tio-aux}")
-    public ResponseEntity<ProductResponse> findByTioAux(
-        @PathVariable("tio-aux") String tioAux
+    @GetMapping("/customer/{cic}/product/{tio-aux}")
+    public ResponseEntity<CustomerProductResponse> findByCicTioAux (
+            @PathVariable("cic") String cic,
+            @PathVariable("tio-aux") String tioAux
     ) {
+        CustomerProductResponse customerProductResponse = customerProductService.findByCicTioAux(cic, tioAux);
 
-        ProductResponse productResponse = dataProductV1Proxy.findByTioAux(tioAux);
-
-        return new ResponseEntity(productResponse, HttpStatus.OK);
+        return new ResponseEntity(customerProductResponse, HttpStatus.OK);
     }
 }
